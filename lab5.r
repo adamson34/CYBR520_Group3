@@ -1,4 +1,4 @@
-#Group 5 - Luke Adamson, Cole Taylor, Charrick Pierce, Logan Muzina, Brian Britton, Pepper Reasnover 
+#Group 3 - Luke Adamson, Cole Taylor, Charrick Pierce, Logan Muzina, Brian Britton, Pepper Reasnover 
 
 #Lab 5
 
