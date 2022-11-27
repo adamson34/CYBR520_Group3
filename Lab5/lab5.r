@@ -26,28 +26,26 @@ library(ggcorrplot)
 # ensure the results are repeatable
 set.seed(7)
 
-dataset <- read.csv('/Users/lukeadamson/Downloads/spambase.csv', sep = ',')
+spambase <- read.csv('/Users/lukeadamson/Downloads/spambase.csv', sep = ',')
+spambase$x <- NULL
 
-# load the data
+#run before correlation matrix to get proper results
+# Change type to non spam 0 and spam 1 
+spambase[spambase =='nonspam'] <- as.numeric(0)              
+spambase[spambase =='spam'] <- as.numeric(1)                 
+spambase$type = as.numeric(spambase$type)                    
+str(spambase)
+
 # calculate correlation matrix
-# See library https://www.rdocumentation.org/packages/caret/versions/6.0-93/topics/findCorrelation
-dataset$x <- NULL
-correlationMatrix <- cor(dataset[,1:58])
+correlationMatrix <- cor(spambase[,1:58])
 # summarize the correlation matrix
 print(correlationMatrix)
 
-# Change type to non spam 0 and spam 1 
-dataset[dataset =='nonspam'] <- as.numeric(0)              
-dataset[dataset =='spam'] <- as.numeric(1)                 
-dataset$type = as.numeric(dataset$type)                    
-str(dataset)
-
-
 #get correlation matrix - representation 1
-visCorMatrix1 <- corrplot(cor(dataset))
+visCorMatrix1 <- corrplot(cor(spambase))
 
 #get correlation matrix - representation 2
-visCorMatrix2<-ggcorrplot(cor(dataset))
+visCorMatrix2<-ggcorrplot(cor(spambase))
 
 visCorMatrix2
 
@@ -61,7 +59,7 @@ set.seed(7)
 # prepare training scheme
 control <- trainControl(method="repeatedcv", number=10, repeats=3)
 # train the model
-model <- train(as.factor(type)~., data=dataset, method="lvq", preProcess="scale", trControl=control)
+model <- train(as.factor(type)~., data=spambase, method="lvq", preProcess="scale", trControl=control)
 # estimate variable importance
 # This will take a minute
 importance <- varImp(model, scale=FALSE)
@@ -83,7 +81,7 @@ library(caret)
 control <- rfeControl(functions=rfFuncs, method="cv", number=10)
 
 # run the RFE algorithm
-results <- rfe(dataset[,1:56], dataset[,57], sizes=c(1:56), rfeControl=control)
+results <- rfe(spambase[,1:56], spambase[,57], sizes=c(1:56), rfeControl=control)
 
 # summarize the results
 # this will take a hot minute
@@ -92,3 +90,7 @@ print(results)
 predictors(results)
 # plot the results
 plot(results, type=c("g", "o"))
+
+
+# svm classification model using full data ---------------------------------
+
