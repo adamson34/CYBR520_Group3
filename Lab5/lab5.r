@@ -26,7 +26,7 @@ library(ggcorrplot)
 # ensure the results are repeatable
 set.seed(7)
 
-spambase <- read.csv('/Users/lukeadamson/Downloads/spambase.csv', sep = ',')
+spambase <- read.csv('spambase.csv', sep = ',')
 spambase$x <- NULL
 
 #run before correlation matrix to get proper results
