@@ -94,3 +94,53 @@ plot(results, type=c("g", "o"))
 
 # svm classification model using full data ---------------------------------
 
+set.seed(7)
+trainIndex <- createDataPartition(spambase$type, p=0.7, list= FALSE)
+Train <- spambase[ trainIndex, ]
+Test <- spambase[ -trainIndex, ]
+trainctrl <- trainControl(method = "cv", number = 10, verboseIter = TRUE)
+svm.model <- train(type~., data=Train, method="svmRadial",
+                   tuneLength = 10,
+                   trControl = trainctrl,
+                   metric="Accuracy")
+svm.model$results
+svm.predict <- predict(svm.model, Test)
+confusionMatrix(svm.predict, as.factor(Test$type), mode = "prec_recall")
+
+# svm classification model using step 6 ---------------------------------
+set.seed(7)
+varstep6 <- c("charExclamation", "your", "num000", "remove", "charDollar", "you", "free", 
+            "business", "hp", "capitalTotal", "our", "receive", "hpl", "over", "order", "money", 
+            "capitalLong", "internet", "email", "all", "type")
+step6 <- spambase[varstep6]
+
+step6$type = as.factor(step6$type)
+
+trainIndex6 <- createDataPartition(step6$type, p=0.7, list = FALSE)
+Train6 <- step6[ trainIndex6, ]
+Test6 <- step6[ -trainIndex6, ]
+trainctrl6 <- trainControl(method = "cv", number = 10, verboseIter = TRUE)
+svm.model6 <- train(type~., data=Test6, method="svmRadial",
+                   tuneLength = 10,
+                   trControl = trainctrl6,
+                   metric="Accuracy")
+svm.model6$results
+svm.predict6 <- predict(svm.model, Test6)
+confusionMatrix(svm.predict6, as.factor(Test6$type), mode = "prec_recall")
+
+# svm classification model using step 8 ---------------------------------
+varstep8 <- c("capitalLong", "report", "order", "num1999", "charHash", "type")
+step8 <- spambase[varstep8]
+step8$type = as.factor(step8$type)
+
+trainIndex8 <- createDataPartition(step8$type, p=0.7, list = FALSE)
+Train8 <- step6[ trainIndex8, ]
+Test8 <- step6[ -trainIndex8, ]
+trainctrl8 <- trainControl(method = "cv", number = 10, verboseIter = TRUE)
+svm.model8 <- train(type~., data=Test8, method="svmRadial",
+                   tuneLength = 10,
+                   trControl = trainctrl8,
+                   metric="Accuracy")
+svm.model8$results
+svm.predict8 <- predict(svm.model8, Test8)
+confusionMatrix(svm.predict8, as.factor(Test8$type), mode = "prec_recall")
