@@ -134,8 +134,8 @@ step8 <- spambase[varstep8]
 step8$type = as.factor(step8$type)
 
 trainIndex8 <- createDataPartition(step8$type, p=0.7, list = FALSE)
-Train8 <- step6[ trainIndex8, ]
-Test8 <- step6[ -trainIndex8, ]
+Train8 <- step8[ trainIndex8, ]
+Test8 <- step8[ -trainIndex8, ]
 trainctrl8 <- trainControl(method = "cv", number = 10, verboseIter = TRUE)
 svm.model8 <- train(type~., data=Test8, method="svmRadial",
                    tuneLength = 10,
