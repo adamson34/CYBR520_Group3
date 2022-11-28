@@ -91,9 +91,7 @@ predictors(results)
 # plot the results
 plot(results, type=c("g", "o"))
 
-
 # svm classification model using full data ---------------------------------
-
 set.seed(7)
 trainIndex <- createDataPartition(spambase$type, p=0.7, list= FALSE)
 Train <- spambase[ trainIndex, ]
@@ -108,7 +106,6 @@ svm.predict <- predict(svm.model, Test)
 confusionMatrix(svm.predict, as.factor(Test$type), mode = "prec_recall")
 
 # svm classification model using step 6 ---------------------------------
-set.seed(7)
 varstep6 <- c("charExclamation", "your", "num000", "remove", "charDollar", "you", "free", 
             "business", "hp", "capitalTotal", "our", "receive", "hpl", "over", "order", "money", 
             "capitalLong", "internet", "email", "all", "type")
