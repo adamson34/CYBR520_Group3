@@ -1,10 +1,13 @@
 #------Group 3 - Final Project---------
 #------ML with a reduced version of the 'Hikari' Dataset-----
 
+#readxl package allows XLSX to be loaded in 
+install.packages('readxl')
 install.packages('caret')
 install.packages('rpart.plot')
 install.packages('e1071')
 
+library(readxl)
 library(caret)
 library(rpart)
 library(rpart.plot)
@@ -59,10 +62,7 @@ Recall
 #------SVM--------
 trainctrl <- trainControl(method = "cv", number = 10, verboseIter = TRUE)
 
-svm.model <- train(Label~., data=train, method="svmRadial",
-                   tuneLength = 10,
-                   trControl = trainctrl,
-                   metric="Accuracy")
+svm.model <- train(Label~., data=train, method="svmRadial", tuneLength = 10, trControl = trainctrl, metric="Accuracy")
 
 svm.model$results
 
