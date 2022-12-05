@@ -14,7 +14,7 @@ library(rpart.plot)
 library(e1071)
 
 #loading dataset into Rstudio 
-networkeventbase <- read.csv('datasetreducedhikari.csv' , sep = ',')
+networkeventbase <- read_xlsx('datasetreducedhikari.xlsx')
 
 #set seed to ensure repeatability (can be any random #)
 set.seed(34)
